@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Experience{% endblock %}
+
+{% block content %}
+<section class="fade-in">
+    <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
+    {% if experiences %}
+        <div class="timeline">
+            {% for experience in experiences %}
+                <div class="timeline-item">
+                    <div class="card">
+                        <h3>{{ experience.role }}</h3>
+                        <p><strong><i class="fas fa-building"></i> {{ experience.organization }}</strong></p>
+                        {% if experience.duration %}
+                            <p><em><i class="far fa-clock"></i> {{ experience.duration }}</em></p>
+                        {% endif %}
+                        <p style="margin-top: 1rem; line-height: 1.8;">{{ experience.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No experience entries available.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

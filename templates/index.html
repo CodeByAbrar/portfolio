@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}Portfolio - Home{% endblock %}
+
+{% block nav_logo %}
+    {% if bio %}{{ bio.name }}{% else %}Portfolio{% endif %}
+{% endblock %}
+
+{% block header_title %}
+    {% if bio %}{{ bio.name }}{% else %}My Portfolio{% endif %}
+{% endblock %}
+
+{% block header_subtitle %}
+    {% if bio %}{{ bio.job_title }}{% else %}Dynamic Portfolio Website{% endif %}
+{% endblock %}
+
+{% block hero_buttons %}
+<div class="hero-buttons">
+    <a href="#bio" class="btn btn-primary"><i class="fas fa-user"></i> About Me</a>
+    <a href="#projects" class="btn btn-outline"><i class="fas fa-folder"></i> View Projects</a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- BIO SECTION -->
+<section id="bio" class="fade-in">
+    <h2><i class="fas fa-user-circle"></i> About Me</h2>
+    {% if bio %}
+        {% if bio.profile_image %}
+            <img src="{{ bio.profile_image.url }}" alt="{{ bio.name }}" class="profile-image">
+        {% endif %}
+        <div style="text-align: center; margin-top: 2rem;">
+            <h3 style="color: var(--text-primary); font-size: 2rem; margin-bottom: 0.5rem;">{{ bio.name }}</h3>
+            <p style="color: var(--primary); font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem;">{{ bio.job_title }}</p>
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem;">{{ bio.description }}</p>
+        </div>
+    {% else %}
+        <div class="card">
+            <p style="text-align: center;">No bio information available. Please add your bio in the admin panel.</p>
+        </div>
+    {% endif %}
+</section>
+
+<!-- EDUCATION SECTION -->
+<section id="education" class="fade-in">
+    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+    {% if educations %}
+        <div class="timeline">
+            {% for education in educations %}
+                <div class="timeline-item">
+                    <div class="card">
+                        <h3>{{ education.degree }}</h3>
+                        <p><strong><i class="fas fa-university"></i> {{ education.institute }}</strong></p>
+                        <p><em><i class="far fa-calendar"></i> {{ education.year }}</em></p>
+                        {% if education.description %}
+                            <p style="margin-top: 1rem;">{{ education.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No education entries available. Please add education records in the admin panel.</p>
+        </div>
+    {% endif %}
+</section>
+
+<!-- SKILLS SECTION -->
+<section id="skills" class="fade-in">
+    <h2><i class="fas fa-code"></i> Skills & Technologies</h2>
+    {% if skills %}
+        <div class="skills-grid">
+            {% for skill in skills %}
+                <div class="skill-item" data-level="{{ skill.level }}">
+                    <div class="skill-name">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i> {{ skill.name }}
+                    </div>
+                    <div class="skill-level">{{ skill.level }}</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress"></div>
+                    </div>
+                    {% if skill.description %}
+                        <p style="margin-top: 0.8rem; font-size: 0.9rem; color: var(--text-secondary);">{{ skill.description }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No skills available. Please add skills in the admin panel.</p>
+        </div>
+    {% endif %}
+</section>
+
+<!-- EXPERIENCE SECTION -->
+<section id="experience" class="fade-in">
+    <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
+    {% if experiences %}
+        <div class="timeline">
+            {% for experience in experiences %}
+                <div class="timeline-item">
+                    <div class="card">
+                        <h3>{{ experience.role }}</h3>
+                        <p><strong><i class="fas fa-building"></i> {{ experience.organization }}</strong></p>
+                        {% if experience.duration %}
+                            <p><em><i class="far fa-clock"></i> {{ experience.duration }}</em></p>
+                        {% endif %}
+                        <p style="margin-top: 1rem; line-height: 1.8;">{{ experience.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No experience entries available. Please add experience records in the admin panel.</p>
+        </div>
+    {% endif %}
+</section>
+
+<!-- PROJECTS SECTION -->
+<section id="projects" class="fade-in">
+    <h2><i class="fas fa-folder-open"></i> Featured Projects</h2>
+    {% if projects %}
+        <div class="projects-grid">
+            {% for project in projects %}
+                <div class="project-card">
+                    {% if project.image %}
+                        <div style="overflow: hidden; height: 220px;">
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+                        </div>
+                    {% endif %}
+                    <div class="project-content">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        {% if project.technologies %}
+                            <p class="project-tech"><i class="fas fa-tools"></i> <strong>Tech Stack:</strong> {{ project.technologies }}</p>
+                        {% endif %}
+                        {% if project.project_link %}
+                            <a href="{{ project.project_link }}" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-external-link-alt"></i> View Project
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No projects available. Please add projects in the admin panel.</p>
+        </div>
+    {% endif %}
+</section>
+
+<!-- Scroll to Top Button -->
+<button id="scrollTop" style="
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--gradient-2);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 5px 20px rgba(0, 240, 255, 0.3);
+    transition: all 0.3s ease;
+" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    // Show/hide scroll to top button
+    window.addEventListener('scroll', function() {
+        const scrollTop = document.getElementById('scrollTop');
+        if (window.pageYOffset > 300) {
+            scrollTop.style.display = 'block';
+        } else {
+            scrollTop.style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock %}

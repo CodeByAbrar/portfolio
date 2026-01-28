@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Education{% endblock %}
+
+{% block content %}
+<section class="fade-in">
+    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+    {% if educations %}
+        <div class="timeline">
+            {% for education in educations %}
+                <div class="timeline-item">
+                    <div class="card">
+                        <h3>{{ education.degree }}</h3>
+                        <p><strong><i class="fas fa-university"></i> {{ education.institute }}</strong></p>
+                        <p><em><i class="far fa-calendar"></i> {{ education.year }}</em></p>
+                        {% if education.description %}
+                            <p style="margin-top: 1rem;">{{ education.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No education entries available.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
